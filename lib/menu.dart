@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'add_item_form.dart';
 
 class MyHomePage extends StatelessWidget {
-  final String message1 = 'This is my first E-Commerce Store';
-
   final List<ItemHomepage> items = [
     ItemHomepage("View Product", Icons.mood, const Color.fromARGB(255, 69, 127, 174)),
-    ItemHomepage("Add Product", Icons.add, const Color.fromARGB(255, 136, 124, 124)),
+    ItemHomepage("Add Item", Icons.add, const Color.fromARGB(255, 136, 124, 124)),
     ItemHomepage("Logout", Icons.logout, Colors.red),
   ];
 
@@ -15,53 +14,50 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'E-Commerce App',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+        title: const Text('E-Commerce App'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              title: const Text('Home'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+              },
+            ),
+            ListTile(
+              title: const Text('Add Item'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const AddItemFormPage()));
+              },
+            ),
+          ],
         ),
-        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InfoCard(title: 'Welcome User', content: message1),
-              ],
-            ),
-            const SizedBox(height: 16.0),
-            Center(
-              child: Column(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 16.0),
-                    child: Text(
-                      'Welcome to my E-Commerce App',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                  ),
-                  GridView.count(
-                    primary: true,
-                    padding: const EdgeInsets.all(20),
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    crossAxisCount: 3,
-                    shrinkWrap: true,
-                    children: items.map((ItemHomepage item) {
-                      return ItemCard(item);
-                    }).toList(),
-                  ),
-                ],
-              ),
+            GridView.count(
+              primary: true,
+              padding: const EdgeInsets.all(20),
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              crossAxisCount: 3,
+              shrinkWrap: true,
+              children: items.map((item) {
+                return InfoCard(item, onTap: () {
+                  if (item.name == "Add Item") {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const AddItemFormPage()));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("You have pressed the ${item.name} button!")),
+                    );
+                  }
+                });
+              }).toList(),
             ),
           ],
         ),
@@ -70,33 +66,46 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class InfoCard extends StatelessWidget {
-  final String title;
-  final String content;
 
-  const InfoCard({super.key, required this.title, required this.content});
+class InfoCard extends StatelessWidget {
+  final ItemHomepage item;
+  final VoidCallback onTap;
+
+  const InfoCard(this.item, {required this.onTap, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2.0,
-      child: Container(
-        width: MediaQuery.of(context).size.width / 3.5,
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+    return Material(
+      color: item.color,
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  item.icon,
+                  color: Colors.white,
+                  size: 30.0,
+                ),
+                const Padding(padding: EdgeInsets.all(3)),
+                Text(
+                  item.name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ],
             ),
-            const SizedBox(height: 8.0),
-            Text(content),
-          ],
+          ),
         ),
       ),
     );
   }
 }
+
 
 class ItemHomepage {
   final String name;
