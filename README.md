@@ -1,4 +1,4 @@
-# e_commerce
+# E commerce
 
 A new Flutter project.
 
@@ -48,3 +48,95 @@ samples, guidance on mobile development, and a full API reference.
 4. Added each button to a list of ItemHomepage objects, setting the name, icon, and color for each. 
 5. Organized the UI with a centered welcome message in an InfoCard widget and arranged the buttons in a 3-column grid (GridView.count).
 6. In ItemCard, each button is wrapped in an InkWell widget that listens for taps. When a button is pressed, a SnackBar appears with a custom message based on the button's name.
+
+## Assignment 2
+
+
+**Purpose of `const` in Flutter**  
+In Flutter, `const` is used to define compile-time constants. It tells the compiler that the value will never change, allowing Flutter to optimize by reusing the widget tree elements where `const` is used. This improves performance, as Flutter can avoid unnecessary rebuilds and redraws.
+
+**Advantages of Using `const`**  
+Using `const` reduces memory usage and improves efficiency, especially in complex UI trees, by ensuring that specific parts of the widget tree don’t rebuild unless absolutely necessary.
+
+**When to Use and Avoid `const`**  
+- **Use `const`** when you have a widget or value that doesn’t need to change across rebuilds.
+- **Avoid `const`** when the widget's properties or content might need to change, as making it `const` would prevent Flutter from updating it dynamically.
+
+
+**Column vs. Row**  
+Both `Column` and `Row` are layout widgets in Flutter used to arrange widgets in a vertical or horizontal direction, respectively.
+
+- **Column** arranges its children vertically from top to bottom.
+- **Row** arranges its children horizontally from left to right.
+
+**Examples**
+
+```dart
+// Example of a Column
+Column(
+  children: [
+    Text("Item 1"),
+    Text("Item 2"),
+    Text("Item 3"),
+  ],
+)
+
+// Example of a Row
+Row(
+  children: [
+    Icon(Icons.star),
+    Text("Row Example"),
+  ],
+)
+```
+
+Both widgets also have properties like `mainAxisAlignment` and `crossAxisAlignment` to control the alignment of their children within the layout.
+
+
+**Input Elements Used**  
+For this assignment's form page, I used:
+1. **TextFormField** for `name` (text input)
+2. **TextFormField** for `amount` (numeric input)
+3. **TextFormField** for `description` (multiline text input)
+
+**Other Input Elements in Flutter**  
+Other common Flutter input elements include:
+- **Checkbox**: Allows users to select true/false options.
+- **Switch**: Useful for toggling settings or features on and off.
+- **Slider**: Lets users select from a range of values.
+- **DropdownButton**: Enables selection from a list of options.
+
+
+**Setting a Theme for Consistency**  
+A theme in Flutter is set using the `ThemeData` class, which allows us to define colors, font styles, and sizes for the entire application. By setting a theme in the `MaterialApp` widget, you can ensure that all elements in the app follow a consistent look and feel.
+
+```dart
+MaterialApp(
+  theme: ThemeData(
+    primarySwatch: Colors.blue,
+    textTheme: TextTheme(
+      bodyText1: TextStyle(fontSize: 16.0),
+    ),
+  ),
+)
+```
+
+I implemented a theme in the application to ensure consistent colors for primary elements, such as the app bar and buttons.
+
+
+**Managing Navigation**  
+In Flutter, navigation between pages is managed using `Navigator`. By pushing and popping routes (pages), you can move between different screens.
+
+- **`Navigator.push`** is used to navigate to a new page.
+- **`Navigator.pop`** is used to return to the previous page.
+
+For example, in the current app, the user can navigate from the main page to the form page using the following code:
+
+```dart
+Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) => AddItemFormPage()),
+);
+```
+
+Using navigation effectively creates a seamless multi-page experience within the application. 
