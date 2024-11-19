@@ -140,3 +140,146 @@ Navigator.push(
 ```
 
 Using navigation effectively creates a seamless multi-page experience within the application. 
+
+
+Assignment 9
+--
+
+
+## **Why Do We Need a Model for JSON Data?**  
+
+Models are necessary to properly map the structured data (like JSON) into meaningful objects that can be used in the application.  
+
+### **Why?**  
+1. **Data Validation**: Models ensure the data received/sent adheres to a predefined structure.  
+2. **Ease of Use**: Models make it easier to access specific attributes without parsing raw JSON every time.  
+
+### **What Happens Without a Model?**  
+- The app can still work with raw JSON, but without a model:
+  - Code becomes error-prone and harder to maintain.  
+  - Accessing or modifying attributes requires manual parsing, increasing complexity and likelihood of errors.  
+
+---
+
+## **Function of the HTTP Library**  
+
+The `http` library facilitates communication between the Flutter app and the Django backend. It provides methods for:  
+1. **Sending Requests**: Enables the app to make GET, POST, PUT, DELETE, etc., requests to the backend.  
+2. **Receiving Responses**: Captures and processes responses from the server, including headers and body content.  
+
+For example, in the `fetchProduct` method, `http.get` retrieves the JSON data from the server.
+
+---
+
+## **Function of CookieRequest**  
+
+`CookieRequest` is a custom library designed to handle authenticated HTTP requests in Flutter, particularly for applications using Django sessions.  
+
+### **Why Use CookieRequest?**  
+1. **Session Management**: Tracks user authentication using cookies, ensuring that protected endpoints can be accessed.  
+2. **State Sharing**: By sharing a single `CookieRequest` instance across all app components, session states are consistent throughout the app.  
+
+---
+
+## **Mechanism of Data Transmission**  
+
+1. **Input**:  
+   - User actions trigger API calls (e.g., logging in, retrieving product data).  
+
+2. **Backend Interaction**:  
+   - The Flutter app sends a request (using `CookieRequest`) to the Django backend.  
+   - The backend processes the request (e.g., queries the database) and returns a response.  
+
+3. **Data Display**:  
+   - JSON responses are parsed into model objects.  
+   - The UI renders these objects for the user.  
+
+
+### **Step-by-Step Workflow**  
+
+1. **Registration**:  
+   - User inputs registration data in Flutter.  
+   - Data is sent to Django’s `register` endpoint using a POST request.  
+   - Django validates the data, creates a user, and responds with success/failure.  
+
+2. **Login**:  
+   - User submits login credentials in Flutter.  
+   - Data is sent to Django’s `login` endpoint.  
+   - On success, Django creates a session and returns session cookies.  
+   - Cookies are stored in the `CookieRequest` instance for subsequent requests.  
+
+3. **Logout**:  
+   - A logout button triggers a request to Django’s `logout` endpoint.  
+   - Django destroys the session, invalidating the cookies.  
+
+4. **Session Persistence**:  
+   - Cookies stored in `CookieRequest` ensure authenticated API requests during the session.  
+
+---
+
+## **Implementation Checklist**  
+
+### 1. **Django Deployment**  
+   - The Django project was deployed and tested locally on `http://localhost:8000`.  
+
+### 2. **Registration Feature in Flutter**  
+   - A registration form was created.  
+   - Form data is sent to the backend using `CookieRequest.post()`.  
+   - Validation errors (if any) are displayed to the user.  
+
+### 3. **Login Page in Flutter**  
+   - A login form was implemented.  
+   - On successful login, cookies are stored in `CookieRequest` for session management.  
+
+### 4. **Django Authentication Integration**  
+   - Django's built-in authentication system (`auth`) was used.  
+   - `is_authenticated` checks ensure certain pages are accessible only to logged-in users.  
+
+### 5. **Custom Model for JSON Endpoint**  
+   - A `Product` model was created in Django with attributes such as `name`, `price`, and `description`.  
+
+### 6. **Item List Page in Flutter**  
+   - `ProductEntryPage` fetches product data using a `GET` request.  
+   - The `FutureBuilder` widget handles loading and displaying the products.  
+
+### 7. **Product Details Page**  
+   - Each item in the list links to a detail page.  
+   - The detail page displays all attributes of the product.  
+   - A "Back" button navigates back to the product list.  
+
+### 8. **Item Filtering**  
+   - The list page filters products to show only items associated with the logged-in user.  
+
+---
+
+## **How Each Checklist Item Was Implemented**  
+
+### Step 1: Deploy Django Locally  
+   - Ensure Django is running on `http://localhost:8000`.  
+   - Create an endpoint `/json/` to return product data in JSON format.  
+
+### Step 2: Implement Registration in Flutter  
+   - Use a `TextFormField` to collect user input.  
+   - On submission, send a `POST` request to Django’s `/register/` endpoint.  
+   - Handle backend responses (success or errors).  
+
+### Step 3: Build Login Page  
+   - Similar to registration, use `TextFormField` widgets for login credentials.  
+   - On success, store cookies for session management.  
+
+### Step 4: Integrate Authentication  
+   - Use `is_authenticated` checks in Django views to secure endpoints.  
+   - Use `CookieRequest` to handle session-based requests in Flutter.  
+
+### Step 5: Create Product Model in Django  
+   - Define a `Product` model with fields like `name`, `price`, and `user`.  
+   - Use Django serializers to expose a `/json/` endpoint.  
+
+### Step 6: Fetch Products in Flutter  
+   - Use `FutureBuilder` in `ProductEntryPage` to handle API calls and display data dynamically.  
+
+### Step 7: Implement Detail Page  
+   - Pass product details to a separate `ProductDetailPage` using the `Navigator`.  
+
+### Step 8: Filter Products by User  
+   - Modify the Django `/json/` endpoint to filter items by the logged-in user.  
