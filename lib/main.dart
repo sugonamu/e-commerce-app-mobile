@@ -18,11 +18,11 @@ class MyApp extends StatelessWidget {
         return request;
       },
       child: MaterialApp(
-        title: 'The Swag Store',
+        title: 'My E-Commerce Store',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: Colors.green,
-          ).copyWith(secondary: Colors.green[400]),
+            primarySwatch: Colors.blue,
+          ).copyWith(secondary: const Color.fromARGB(255, 252, 252, 252)),
         ),
         home: LoginPage(), // Your home widget
       ),

@@ -34,7 +34,7 @@ class _ProductEntryPageState extends State<ProductEntryPage> {
     final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Product Entry List'),
+        title: const Text('Product List'),
       ),
       drawer: const LeftDrawer(),
       body: FutureBuilder(
@@ -47,7 +47,7 @@ class _ProductEntryPageState extends State<ProductEntryPage> {
               return const Column(
                 children: [
                   Text(
-                    'There is no Product data in The Swag Store.',
+                    'There is no Product in the Shop.',
                     style: TextStyle(fontSize: 20, color: Color(0xff59A5D8)),
                   ),
                   SizedBox(height: 8),

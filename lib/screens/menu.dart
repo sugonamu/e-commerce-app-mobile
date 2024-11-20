@@ -8,8 +8,8 @@ class MyHomePage extends StatelessWidget {
   final String className = 'PBP KKI';
   
   final List<ItemHomepage> items = [
-    ItemHomepage("View Product List", Icons.shopping_bag, Colors.blue),
-    ItemHomepage("Add Product", Icons.add, Colors.green),
+    ItemHomepage("View Product List", Icons.shopping_bag,const Color.fromARGB(255, 69, 127, 174)),
+    ItemHomepage("Add Product", Icons.add, const Color.fromARGB(255, 136, 124, 124)),
     ItemHomepage("Logout", Icons.logout, Colors.red),//added colors for each of the buttons
   ];
 
@@ -20,7 +20,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(//title of application
-          'E-Commerce Store',
+          'My E-Commerce Store',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -52,7 +52,7 @@ class MyHomePage extends StatelessWidget {
                   const Padding(
                     padding: EdgeInsets.only(top: 16.0),
                     child: Text(
-                      'Welcome to my E Commerce Store',
+                      'Welcome to my E-Commerce Store',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18.0,

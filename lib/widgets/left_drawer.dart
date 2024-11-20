@@ -18,7 +18,7 @@ class LeftDrawer extends StatelessWidget {
     child: const Column(
       children: [
         Text(
-          'E-Commerce Store',
+          'My E-Commerce Store',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 24,
@@ -28,7 +28,7 @@ class LeftDrawer extends StatelessWidget {
         ),
         Padding(padding: EdgeInsets.all(8)),
         Text(
-          "My First Store",
+          "This is my First E-Commerce Store",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                 fontSize: 15,
@@ -64,7 +64,7 @@ class LeftDrawer extends StatelessWidget {
     },
   ),
   ListTile(
-    leading: const Icon(Icons.shopping_bag),
+    leading: const Icon(Icons.add_reaction_rounded),
     title: const Text('Product List'),
     onTap: () {
         // Route to the mood page
